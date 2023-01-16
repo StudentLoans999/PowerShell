@@ -9,4 +9,4 @@ param([string]$folderPath = "\\ABC-app01\Public\Data\Results\")
 $inputFolderName = $folderPath
 
 # Generate the .txt file in \\ABC-app01\Public\Data\Results\ which will be called MapResults_*.txt by running this: CreateMapResultsTXT.bat 
-& "C:\Program Files (X86)\
+CreateMapResultsTXT.bat
