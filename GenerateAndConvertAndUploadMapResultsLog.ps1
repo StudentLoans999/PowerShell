@@ -64,3 +64,8 @@ Try
     
     # Remove "\\ABC-app01\Public\Data\Results\" from the .txt file; it is implicit:
     $originalText = Get-Content -Path $file
+    $newText = $originalText -replace '\\\\ABC-app01\\Public\\Data\\Results\\',''
+    # Write-Host $newText
+    $newText | Set-Content -Path $file
+
+    # Build file name for new Excel file
