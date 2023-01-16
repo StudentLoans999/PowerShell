@@ -38,7 +38,8 @@ $excelBefore = Get-Process EXCEL -IncludeUserName | select name, starttime, User
 $excelBefore
 Write-Output "'n All Excel Tasks currently running"
 
-## Opening/Save As section
+## Opening/Save As section ##
+
 # Create the new Excel app
 $excel = new-object Microsoft.Office.Interop.Excel.ApplicationClass
 #$excel.Visible = "true"
@@ -68,4 +69,39 @@ Try
     # Write-Host $newText
     $newText | Set-Content -Path $file
 
-    # Build file name for new Excel file
+    # Build file name for new Excel file:
+    $path = ($file).substring(0, ($file).lastindexOf(".")) # remove original extension
+    $path += ".xlsx" # add new extension
+    
+    $book = $excel.Workbooks.Open($file)
+    "open $file"
+    
+    Write-Host $book.Name -BackgroundColor Red
+    
+    $theWorksheet = $book.ActiveSheet
+    "worksheet set"
+    
+    # Insert blank row for header
+    $shiftDownCommand = -4121 # code Excel uses
+    
+    $topRow = $theWorksheet.cells.item(1,1).entireRow
+    $active = $topRow.activate()
+    $active = $topRow.insert.($shiftDownCommand)
+    # add header text:
+    $theWorksheet.cells.item(1,1) = "File Name:"
+    $theWorksheet.cells.item(1,2) = "Processed:"
+    $theWorksheet.cells.item(1,3) = "Results"
+    # add warning:
+    $newTopRow = $theWorksheet.cells.item(1,1).entireRow
+    $active = $topRow.activate()
+    $active = $topRow.insert.($shiftDownCommand)
+    # add header text:
+    $theWorksheet.cells.item(1,1) = "Updated:" + (Get-Date)
+    $theWorksheet.cells.item(1,2) = "Warning:"
+    $theWorksheet.cells.item(1,3) = "Leaving this file open in Teams will keep it from being updated."
+    
+    "Format"
+    # 'm/d/yyyy h:mm AM/PM'
+    $theWorksheet.columns.item(2).NumberFormat = 'm/d/yyyy h:mm AM/PM'
+    
+   
