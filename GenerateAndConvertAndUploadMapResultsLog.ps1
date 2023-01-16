@@ -149,4 +149,22 @@ Catch
   Get-date
   
   # Clean things up after failure:
-  $book.Close($false
+  $book.Close($false) # close workbook without saving changed (hence "($false)")
+  
+  Start-Sleep -s 5
+  $excel.Quit()
+  Start-Sleep -s 5
+  
+  $excel = $null
+  
+  Clear-Variable allWbks
+  
+  # Run this section right after closing the Excel file ; It is repeated here to make sure it gets closed
+  Write-Output "'n Killed the Excel Task that was created in this script"
+  $excelKill = $excelNew | Stop-Process
+  $excelKill
+  
+  Start-Sleep -s 5
+} # end of Catch
+
+Write-Host "Finished Processsing/Converting text to xlsx"
