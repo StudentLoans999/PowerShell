@@ -1,1 +1,0 @@
-param([string]$FolderPath = "\\abc-app01\Public\Data\Results
