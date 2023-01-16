@@ -104,4 +104,49 @@ Try
     # 'm/d/yyyy h:mm AM/PM'
     $theWorksheet.columns.item(2).NumberFormat = 'm/d/yyyy h:mm AM/PM'
     
+    "Autofit"
+    $theWorksheet.UsedRange.EntireColumn.AutoFit() | Out-Null
+    # this doesn't seem to be honored in Teams, but Excel sees it
    
+    $book.saveas($path, $xlFixedFormat)
+    
+    $book.close()
+    Start-Sleep -s 5
+    
+    # Run this section right after closing the Excel file
+    Write-Output "'n Killed the Excel Task that was created in this script"
+    $excelKill = $excelNew | Stop-Process
+    $excelKill
+    Start-Sleep -s 5
+    
+    # Delete the processed .txt file
+    Remove-Item $file
+    
+    Write-Host "$file was processed into $path and deleted"
+  } # end of loop on found workbooks
+  
+  $excel.Quit()
+  Start-Sleep -s 5
+  
+  $excel = $null
+  
+  Clear-Variable allWbks
+  
+  # Run this section right after closing the Excel file ; It is repeated here to make sure it gets closed
+  Write-Output "'n Killed the Excel Task that was created in this script"
+  $excelKill = $excelNew | Stop-Process
+  $excelKill
+  
+  Start-Sleep -s 5
+} # end of Try
+
+Catch
+{
+  Write-Host -EventId "5001" '
+    -LogName "Application" '
+    -Message "There was a problem in the Opening/Refreshing/Closing Section of the script." '
+    -Source "Application"
+  Get-date
+  
+  # Clean things up after failure:
+  $book.Close($false
