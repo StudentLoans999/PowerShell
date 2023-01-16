@@ -167,4 +167,54 @@ Catch
   Start-Sleep -s 5
 } # end of Catch
 
-Write-Host "Finished Processsing/Converting text to xlsx"
+Write-Host "Finished Processsing aka Converting text to xlsx"
+# Import Module
+Import-Module SharePointPnPPowerShellOnline
+
+## Create Secure Stored Cred Password File
+#read-host -assecurestring | convertfrom-securestring | out-file "\\ABC-app01\Public\Creds\DavidRicheyUser.txt"
+# Compile Creds for Authentication below
+$password = get-content "\\ABC-app01\Public\Creds\DavidRicheyUser.txt" | convertto-securestring
+$creds = new-object -typename System.Management.Automation.PSCredential -argumentlist "David.Richey@ABC.com",$password
+
+# Variables/Pathing - Trailing slashed (/,\) Utilized later in the script
+$sharepointURL = "https://ABC.sharepoint.com/sites/ABCData/"
+$localPath = "\\ABC-app01\Public\Data\Results\"
+$teamsFolderPath = "Shared Documents/Gemeral/ABC Logs"
+
+# Connect to Sharepoint
+Connect-PnPOnline $sharepointURL -Credentials $creds -Verbose
+
+If (Test-Path ($localPath + "MapResultsLog.xlsx")) 
+{ 
+  Write-Host "Old file found; removing"
+  Remove-Item -Path ($localPath + "MapResultsLog.xlsx")
+}
+
+# Foreach Item Upload
+$LHD = (Get-ChildItem -Path $localPath -Filter "*.xlsx")
+$uploadError = $null
+
+Foreach ($item in $LHD) # looping in order to make sure fodler stays clean
+{
+  Rename-Item -Path $item.FullName -NewName "MapResultsLog.xlsx"
+  
+  $theFile = ($localPath + "MapResultsLog.xlsx")
+  
+  Try { Add-PnPFile -Folder $teamsFolderPath -Path $theFile -ErrorVariable uploadError }
+  Catch
+  {
+    "Error occurred in $theFile Upload; the log is probably open in Teams"
+    Write-Host $uploadError
+  }
+  
+  # clean up after success
+  if (!$uploadError)
+  {
+    Remove-Item -Path $theFile
+    # if the file is still in the folder, we will know that the upload failed; the likely cause is that someone has the previous log open in Teams
+  }
+} # end of foreach
+
+# (Clean up and) Back out of Sharepoint
+Disconnect-PnPOnline
