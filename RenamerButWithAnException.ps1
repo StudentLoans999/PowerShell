@@ -1,0 +1,3 @@
+$exceptionFileFilter = "*ABC*.csv"
+
+$folderPath = 
