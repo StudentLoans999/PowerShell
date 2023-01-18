@@ -1,7 +1,7 @@
 $folderPath = "\\ABC-app01\Public\Data\Files\"
 $fileFilter = "*ABC*.csv"
 $subfolderToMoveTo = "ABC Good Files"
-$$timeDelayHours = 2 # number of hours to check for if file has been there that long 
+$timeDelayHours = 2 # number of hours to check for if file has been there that long 
 $timeDelaySpan = new-timespan -hours $timeDelayHours
 $filesLookingFor = Get-ChildItem -Path folderPath -Filter fileFilter -File
 
