@@ -7,7 +7,7 @@ $thisFileNumber = 1
 
 Get-ChildItem - Path $checkThisFolder -Filter $fileFilter | Foreach-Object
 {
-  if ($thisFileNumber -le $numberToLimit)
+  if ($thisFileNumber -le $numberToLimit) # loops $numberToLimit of times
   {
     Move-item -Path $_.FullName -Destination $targetFolder # here you can do whatever process you want limited
     $thisFileNumber++
