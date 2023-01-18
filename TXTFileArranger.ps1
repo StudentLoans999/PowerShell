@@ -12,5 +12,7 @@ ForEach ($file in $filesLookingFor)
   
   Get-Content ($newName + "_1") | % { $_ -replace '"','' } | Set-Content $newName
   
+  Remove-Item $file.FullName
+  Remove-Item ($newName+"_1")
   $count += 1
 }
