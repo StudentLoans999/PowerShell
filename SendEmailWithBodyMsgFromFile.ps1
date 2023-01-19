@@ -1,3 +1,3 @@
 $date = Get-Date -Format yyyy-MM-dd
 
-#readihost -as
+#readhost -assecurestring | convertfrom-securestring | out-file 
