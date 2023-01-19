@@ -4,7 +4,7 @@ $date = Get-Date -Format yyyy-MM-dd
 $username = "david_richey@abc.com"
 $sendTo = "john_smith@def.com"
 
-#readhost -assecurestring | convertfrom-securestring | out-file 
+# readhost -assecurestring | convertfrom-securestring | out-file 
 
 # Extract the password from the password file
 $password = get-content "\\ABC-app01\Public\Creds\ABCCredentials.txt" | convertto-securestring
