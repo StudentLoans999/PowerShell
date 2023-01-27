@@ -1,4 +1,4 @@
-param([string]$folderPath = "\\ABC-app01\Public\Data\Results\")
+param([string]$folderPath = "\\ABC-server\Public\Data\Results\")
 
 ## This file is found here: \\ABC-app01\Public\PowerShell
 ## If this script will be run by automation (Windows Scheduler, etc.), add the -NonInteractive Switch to it to prevent the Excel task that runs from hanging 
@@ -65,7 +65,7 @@ Try
     
     # Remove "\\ABC-app01\Public\Data\Results\" from the .txt file; it is implicit:
     $originalText = Get-Content -Path $file
-    $newText = $originalText -replace '\\\\ABC-app01\\Public\\Data\\Results\\',''
+    $newText = $originalText -replace '\\\\ABC-server\\Public\\Data\\Results\\',''
     # Write-Host $newText
     $newText | Set-Content -Path $file
 
@@ -174,7 +174,7 @@ Import-Module SharePointPnPPowerShellOnline
 ## Create Secure Stored Cred Password File
 #read-host -assecurestring | convertfrom-securestring | out-file "\\ABC-app01\Public\Creds\DavidRicheyUser.txt"
 # Compile Creds for Authentication below
-$password = get-content "\\ABC-app01\Public\Creds\DavidRicheyUser.txt" | convertto-securestring
+$password = get-content "\\ABC-server\Public\Creds\DavidRicheyUser.txt" | convertto-securestring
 $creds = new-object -typename System.Management.Automation.PSCredential -argumentlist "David.Richey@ABC.com",$password
 
 # Variables/Pathing - Trailing slashed (/,\) Utilized later in the script
