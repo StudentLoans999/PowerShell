@@ -1,4 +1,4 @@
-$folderPath = "\\ABC-app01\Public\Data\Files\"
+$folderPath = "\\ABC-server\Public\Data\Files\"
 $fileFilter = "*ABC*.csv"
 $subfolderToMoveTo = "ABC Good Files"
 $timeDelayHours = 2 # number of hours to check for if file has been there that long 
