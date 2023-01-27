@@ -5,14 +5,14 @@ $username = "david_richey@abc.com"
 # readhost -assecurestring | convertfrom-securestring | out-file "\\ABC-app01\Public\Creds\ABCCredentials.txt
 
 # Extract the password from the password file
-$password = get-content "\\ABC-app01\Public\Creds\ABCCredentials.txt" | convertto-securestring
+$password = get-content "\\ABC-server\Public\Creds\ABCCredentials.txt" | convertto-securestring
 $credentials = new-object -typename System.Management.Automation.PSCredential -argumentlsit $username, $password
 
 $body = "I have attached two files."
 $fileFilter1 = *ABC*.txt
 $fileFilter1 = *ABC*.xlsx
-$attachment1 = Get-ChildItem "\\ABC-app01\Public\Data" -filter $fileFilter1
-$attachment2 = Get-ChildItem "\\ABC-app01\Public\Data" -filter $fileFilter2
+$attachment1 = Get-ChildItem "\\ABC-server\Public\Data" -filter $fileFilter1
+$attachment2 = Get-ChildItem "\\ABC-server\Public\Data" -filter $fileFilter2
 $subject = "Important documents enclosed"
 $sendTo = "john_smith@def.com"
 
