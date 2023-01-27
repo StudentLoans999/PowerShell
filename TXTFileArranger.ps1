@@ -1,4 +1,4 @@
-$filesLookingFor = Get-ChildItem "\\ABC-app01\Public\Data\Files\*ABC*.txt" # can also use "gci" isntead of "Get-ChildItem"
+$filesLookingFor = Get-ChildItem "\\ABC-server\Public\Data\Files\*ABC*.txt" # can also use "gci" isntead of "Get-ChildItem"
 $count = 1
 
 ForEach ($file in $filesLookingFor)
