@@ -1,4 +1,4 @@
-$folderPath = "\\ABC-app01\Public\Data\Files"
+$folderPath = "\\ABC-server\Public\Data\Files"
 $fileFilter = "*ABC*.csv*
 $filesLookingFor = (Get-ChildItem -Path $folderPath -Filter fileFilter) # could also type "gci" instead of "Get-ChildItem"
 
