@@ -1,7 +1,7 @@
 # This script limits how many times a process (X) gets run. In this case it is moving files (so only 5 files get moved at once)
-$checkThisFolder = "\\ABC-app01\Public\Data\Files\Done"
+$checkThisFolder = "\\ABC-server\Public\Data\Files\Done"
 $fileFilter = "*ABC*.xlsx"
-$targetFolder = "\\ABC-app01\Public\Data\Files\"
+$targetFolder = "\\ABC-server\Public\Data\Files\"
 $numberToLimit = 5
 $thisFileNumber = 1
 
