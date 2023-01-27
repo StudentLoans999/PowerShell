@@ -1,5 +1,5 @@
 # This checks for TXT files that are less than 5 Lines long, if so, then the file gets deleted, if not, do X process
-$checkThisFolder = "\\ABC-app01\Public\Data\Files\CheckForLength"
+$checkThisFolder = "\\ABC-server\Public\Data\Files\CheckForLength"
 $fileFilter = "*ABC*.txt"
 
 Get-ChildItem -Path $checkThisFolder -Filter $fileFilter | Foreach-Object
