@@ -1,6 +1,6 @@
 $exceptionFileFilter = "*ABC*.csv"
 
-$folderPath = "\\ABC-app01\Public\Data\Files\"
+$folderPath = "\\ABC-server\Public\Data\Files\"
 $fileFilter = "*.csv"
 
 # Get all filtered files in folder path provided above
@@ -24,7 +24,7 @@ ForEach ($theFile in $filesLookingFor)
     Catch { Write-Host "This file can't be renamed: $theFile" }
   }
   
-  $logFilePath = "\\ABC-app01\Public\Data\Files\RenamerWithExceptionLog.txt"
+  $logFilePath = "\\ABC-server\Public\Data\Files\RenamerWithExceptionLog.txt"
   $logMessage = "The renaming script renamed $renamedFile and was run at"
   $logMessage +" - "+ (Get-Date).ToSTring() >> $logFilePath
 }
