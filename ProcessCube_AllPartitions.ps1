@@ -2,6 +2,7 @@
 
 $listOfTables = ("TableA", "TableB", "TableC") # TableC has monthly partitions
 
+# Part 1: Process the tables that don't have partitions
 # Loop on Tables A and B (which don't have Partitions)
 ForEach ($thisTable in $listOfTables)
 { 
@@ -11,7 +12,8 @@ ForEach ($thisTable in $listOfTables)
   -ProcessFull 
 } # the -ServerName and other ones with a - are parameters that are being set here and are being sent to the RefreshCubePartitions.ps1
 
-# Set Variables to begin processing TableC which isn't just one partition like the rest, but holds Monthly partitions in this case, with the name format of yyyyMM
+# Part 2: Process the table that does have partitions
+# Set Variables to begin processing TableC which isn't just one (zero) partition like the rest, but holds Monthly partitions in this case, with the name format of yyyyMM
 $currentDate = Get-Date # to know when/which is the most recent monthly partition that needs to be processed
 
 # Start with the oldest partitions
