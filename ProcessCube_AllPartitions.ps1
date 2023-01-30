@@ -1,3 +1,5 @@
+# This script will process the Cube by Table, and when it gets to the TableC table, it will process ALL the monthly partitions
+
 $listOfTables = ("TableA", "TableB", "TableC") # TableC has monthly partitions
 
 # Loop on Tables A and B (which don't have Partitions)
