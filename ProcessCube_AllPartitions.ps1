@@ -4,7 +4,7 @@
 
 $listOfTables = ("TableA", "TableB") # these tables don't have partitions
 
-# Loop on Tables A and B
+# Loop on the non-partitioned tables
 ForEach ($thisTable in $listOfTables)
 { 
   & '\\ABC-server\Public\Scripts\RefreshCubePartitions.ps1' -ServerName 'ABC-serverB' `
