@@ -14,6 +14,7 @@ ForEach ($thisTable in $listOfTables)
 } # the -ServerName and other ones with a - are parameters that are being set here and are being sent to the RefreshCubePartitions.ps1
 
 # Part 2: Process the table that does have partitions: TableC
+
 # Set Variables to begin processing TableC which isn't just one (zero) partition like the rest, but holds Monthly partitions in this case, with the name format of yyyyMM
 $currentDate = Get-Date # to know when/which is the most recent monthly partition that needs to be processed
 
