@@ -28,19 +28,28 @@ $partitionList += $currentDate.addMonths(-2).ToString("yyyyMM")
 
 # ^ This will process 3 months of partitions. Todays date is January 2023, so it will process these partitions: 202301, 202212, and 202211
 
-# Loop on the list of partitions and refresh each
-ForEach ($thisPartition in $partitionList)
+try
 {
-  # Now we add the PARTName parameter
-  & '\\ABC-server\Public\Scripts\RefreshCubePartitions.ps1' -ServerName 'ABC-serverB' `
-  -DBName 'ABCDB' `
-  -TBLName 'TableC' `
-  -PARTName $thisPartition `
-  -ProcessFull
-}
+  # Loop on the list of partitions and refresh each
+  ForEach ($thisPartition in $partitionList)
+  {
+    # Now we add the PARTName parameter
+    & '\\ABC-server\Public\Scripts\RefreshCubePartitions.ps1' -ServerName 'ABC-serverB' `
+    -DBName 'ABCDB' `
+    -TBLName 'TableC' `
+    -PARTName $thisPartition `
+    -ProcessFull
+  }
 
-# Do a -ProcessCalc on the TableC table (this is a huge table and doing this kind of Process saves time)
-& '\\ABC-server\Public\Scripts\RefreshCubePartitions.ps1' -ServerName 'ABC-serverB' `
-  -DBName 'ABCDB' `
-  -TBLName 'TableC' `
-  -ProcessCalc
+  # Do a -ProcessCalc on the TableC table (this is a huge table and doing this kind of Process saves time)
+  & '\\ABC-server\Public\Scripts\RefreshCubePartitions.ps1' -ServerName 'ABC-serverB' `
+    -DBName 'ABCDB' `
+    -TBLName 'TableC' `
+    -ProcessCalc
+  
+  Write-Host("The partitions processed successfully")
+}
+catch
+{
+  Write-Host("The partitions did not process successfully")
+}
