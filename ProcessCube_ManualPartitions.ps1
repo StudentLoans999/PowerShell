@@ -2,18 +2,27 @@
 
 $partitionList = ('201712', '201711', '201710') # input the partitions you want to process
 
-# Loop on the list of partitions and refresh each
-ForEach ($thisPartition in $partitionList)
+try
 {
-  # Now we add the PARTName parameter
-  $refreshCommand =
-  (
-    '& "\\ABC-server\Public\Scripts\RefreshCubePartitions.ps1" ' +
-    '-ServerName 'ABC-serverB' -DBName ABCDB ' +
-    '-TBLName TableC -PARTName ' +
-    $thisPartition +
-    ' -ProcessFull'
-  )
-  
-  Invoke-Expression $refreshCommand
+  # Loop on the list of partitions and refresh each
+  ForEach ($thisPartition in $partitionList)
+  {
+    # Now we add the PARTName parameter
+    $refreshCommand =
+    (
+      '& "\\ABC-server\Public\Scripts\RefreshCubePartitions.ps1" ' +
+      '-ServerName 'ABC-serverB' -DBName ABCDB ' +
+      '-TBLName TableC -PARTName ' +
+      $thisPartition +
+      ' -ProcessFull'
+    )
+
+    Invoke-Expression $refreshCommand
+  }
+
+  Write-Host("The partitions processed successfully")
+}
+catch
+{
+  Write-Host("The partitions did not process successfully")
 }
