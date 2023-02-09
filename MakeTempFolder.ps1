@@ -30,7 +30,7 @@ function DR-Make-Temp-Folder
 $theTempPath = $false
 while (!$theTempPath)
 {
-    $theTempPath = DR-Make-Temp-Folder -RootFolder $h -FolderPrefix 'temp_'
+    $theTempPath = DR-Make-Temp-Folder -RootFolder $PSScriptRoot -FolderPrefix 'temp_'
 }
 
 # Get info about new folder created
