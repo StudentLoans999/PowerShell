@@ -6,7 +6,7 @@
   # 5. Finds non-default country and moves it to front of the filename
   # 6. Moves all renamed files into a new folder, based on the country name in it's filename
 
-$parentFolder = "\\ABC-server\Public\Data\Raw Files\" # where original files are (top level folder where lower level folders aree located)
+$parentFolder = "\\ABC-server\Public\Data\Raw Files\" # where original files are (top level folder where lower level folders are located)
 $fileExtFilter = "*.csv" # type of original files (the filter to select the right files)
 
 $regularity = "Weekly_" # this is a string in the filename that has a non-default regularity filename (default: Daily) Ex: Weekly_ ; Monthly_ ; Yearly_
