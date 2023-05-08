@@ -7,9 +7,10 @@
   # 6. Moves all renamed files into a new folder, based on the country name in it's filename
 
 $parentFolder = "\\ABC-server\Public\Data\Raw Files\" # where original files are (top level folder where lower level folders aree located)
-$fileExt = "*.csv" # type of original files (the filter to select the right files)
+$fileExtFilter = "*.csv" # type of original files (the filter to select the right files)
 
 $regularity = "Weekly_" # this is a string in the filename that has a non-default regularity filename (default: Daily) Ex: Weekly_ ; Monthly_ ; Yearly_
+$fileExt = ".csv" # used to add to the renamed file
 $today = Get-Date -Format "yyyy-MM-dd" # used to create a date stamp
 $today = "_TS$today" # used to label the CA files so that they are differentiatied from US ## first 3 characters are used in Substring step later
 
@@ -20,7 +21,7 @@ $importUSPath = "\\ABC-server\Public\Data\US Renamed\" # where default renamed f
 $importnonUSPath = "\\ABC-server\Public\Data\Not US Renamed\" # where non-default country renamed file gets moved to
 
 # Get all filtered files in each folder and renames each file
-$filesLookingFor = (Get-ChildItem -Path $parentFolder -Filter $fileExt -Recurse) # -Recurse allows it to seach into all the child folders
+$filesLookingFor = (Get-ChildItem -Path $parentFolder -Filter $fileExtFilter -Recurse) # -Recurse allows it to seach into all the child folders
 
   foreach ($theFile in $filesLookingFor) # loops through all files found in the child folders
   {
