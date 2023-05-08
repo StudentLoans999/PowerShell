@@ -34,7 +34,7 @@ $filesLookingFor = (Get-ChildItem -Path $parentFolder -Filter $fileExtFilter -Re
     # Removes redundant date in filename (if one exists) ## can be changed to look for and replace any other redundant string in the filename 
     $newFileName = $newFileName -Replace "(_\d{1,2}-\d{1,2}-\d{4})\1","`${1}" # date format: mm-dd-yyyy ## adds this date format to the end of the filename
     $newFileName = $newFileName -Replace "(_\d{4}-\d{1,2}-\d{1,2})\1","`${1}" # date format: yyyy-mm-dd ## adds this date format to the end of the filename
-    $newFileName = $newFileName -Replace "_[0-9]{10,12}(_[0-9]{10,12})","`${1}" # finds two dates next to each other and replaces with the second date only
+    $newFileName = $newFileName -Replace "_[-0-9]{10,12}(_[-0-9]{10,12})","`${1}" # finds two dates next to each other and replaces with the second date only
      
     Write-Host "Removed redundant date `n" -ForegrounfColor Red
     Write-Host $newFileName
