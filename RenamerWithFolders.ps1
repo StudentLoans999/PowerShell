@@ -6,11 +6,12 @@
   # 5. Finds non-default country and moves it to front of the filename
   # 6. Moves all renamed files into a new folder, based on the country name in it's filename
 
-$parentFolder = "\\ABC-server\Public\Data\Raw Files\" # where original files are
-$fileExt = "*.csv" # type of original files
+$parentFolder = "\\ABC-server\Public\Data\Raw Files\" # where original files are (top level folder where lower level folders aree located)
+$fileExt = "*.csv" # type of original files (the filter to select the right files)
 
 $regularity = "Weekly_" # this is a string in the filename that has a non-default regularity filename (default: Daily) Ex: Weekly_ ; Monthly_ ; Yearly_
-$today = Get-Date -Format "yyyy-MM-dd"
+$today = Get-Date -Format "yyyy-MM-dd" # used to create a date stamp
+$today = "_TS$today" # used to label the CA files so that they are differentiatied from US ## first 3 characters are used in Substring step later
 
 $abcCountry = "ABC CA_" # this is a string in the filename that has a non-default country filename (default: US) Ex: ABC CA_ ; ABC CN_ ; ABC UK_
 
@@ -24,7 +25,7 @@ $filesLookingFor = (Get-ChildItem -Path $parentFolder -Filter $fileExt -Recurse)
   foreach ($theFile in $filesLookingFor) # loops through all files found in the child folders
   {
     # Moves regularity: "Weekly_" (if non-default one exists) to the beginning of the filename
-    $newFileName = $theFile -Replace "(.+)$weekly", "$weekly`$1" # looks for non-default regularity and if it finds it, it moves it to the front
+    $newFileName = $theFile -Replace "(.+)$regularity", "$regularity`$1" # looks for non-default regularity and if it finds it, it moves it to the front
     
     Write-Host "Moved Weekly_ if exists`n" -ForegrounfColor Green
     Write-Host $newFileName
@@ -32,6 +33,7 @@ $filesLookingFor = (Get-ChildItem -Path $parentFolder -Filter $fileExt -Recurse)
     # Removes redundant date in filename (if one exists) ## can be changed to look for and replace any other redundant string in the filename 
     $newFileName = $newFileName -Replace "(_\d{1,2}-\d{1,2}-\d{4})\1","`${1}" # date format: mm-dd-yyyy ## adds this date format to the end of the filename
     $newFileName = $newFileName -Replace "(_\d{4}-\d{1,2}-\d{1,2})\1","`${1}" # date format: yyyy-mm-dd ## adds this date format to the end of the filename
+    $newFileName = $newFileName -Replace "_[0-9]{10,12}(_[0-9]{10,12})","`${1}" # finds two dates next to each other and replaces with the second date only
      
     Write-Host "Removed redundant date `n" -ForegrounfColor Red
     Write-Host $newFileName
@@ -43,11 +45,14 @@ $filesLookingFor = (Get-ChildItem -Path $parentFolder -Filter $fileExt -Recurse)
     Write-Host "Added folder name`n" -ForegrounfColor Yellow
     Write-Host $newFileName
     
-    # Adds the current date timestamp to the end of the filename
-    $newFileName = $newFileName -Replace "$fileExt", "_TS$today$fileExt" # the "TS" is just to show you can add characters too 
-     
-    Write-Host "Added timestamp`n" -ForegrounfColor Magenta
-    Write-Host $newFileName
+    # Adds the current date timestamp to the end of the filename (if doesn't exist already)
+    if ($newFileName -notmatch ($today.Substring(0,3))) # if doesn't already have _TS in the filename
+    {
+      $newFileName = $newFileName -Replace "$fileExt", "xyz$today$fileExt" # the "xyz" is just to show you can add characters too 
+
+      Write-Host "Added timestamp`n" -ForegrounfColor Magenta
+      Write-Host $newFileName
+    }
     
     # Moves country: "ABC CA" (if non-default one exists) to the beginning of the filename
     $newFileName = $newFileName -Replace "(.+)$abcCountry", "$abcCountry`$1" # looks for non-default country name and if it finds it, it moves it to the front
@@ -64,3 +69,4 @@ $filesLookingFor = (Get-ChildItem -Path $parentFolder -Filter $fileExt -Recurse)
     # Moves files to respective Renamed folder, depending on if it is US or a different country
     if ($newFileName.Contains($nonUSCountryName)) { Move-Item $renamedFilePath -Destination ($importnonUSPath) -Force }
     else { Move-Item $renamedFilePath -Destination ($importUSPath) -Force }
+  }
