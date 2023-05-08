@@ -1,4 +1,5 @@
 $exceptionFileFilter = "*ABC*.csv"
+$fileLikeExceptionButNotFileFilter = "*NeededFile_ABC*.csv"
 
 $folderPath = "\\ABC-server\Public\Data\Files\"
 $fileFilter = "*.csv"
@@ -8,7 +9,7 @@ $filesLookingFor = (Get-ChildItem -Path $folderPath -Filter $fileFilter) # can a
 
 ForEach ($theFile in $filesLookingFor)
 {
-  if($theFile.Name -like $exceptionFileFilter)
+  if (($theFile.Name -like $exceptionFileFilter) -and ($theFile.Name -notlike $fileLikeExceptionButNotFileFilter))
   {
     Write-Host "Exception file - so will not rename"
     Continue
