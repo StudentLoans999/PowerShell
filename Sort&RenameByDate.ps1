@@ -12,4 +12,11 @@ ForEach ($theFile in $filesLookingFor)
   {
     $newName = ($ie.ToString("0000")+"_"+$theFile.Name)
     Write-Host "Renaming to: $newName "
-    Rename-Item -Path 
+    Rename-Item -Path $folderPath$theFile $newName
+    $ie += 1
+  }
+  Catch
+  {
+    Write-Host "This file can't be renamed: $theFile\nException:$_"
+  {
+}
