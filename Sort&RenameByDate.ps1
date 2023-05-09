@@ -1,6 +1,6 @@
 # Sorts files found in folder by modified date, descending, and then renames each file with a number starting with 1 and also adds a _ at the front of the filename 
 
-$folderPath = ""
+$folderPath = "\\ABC-server\Public\Data\Unsorted Files\"
 $fileFilter = "*.txt"
 
 # Get all filtered files in folder path provided above
